@@ -1,14 +1,55 @@
-from flask import Flask, redirect, url_for
-import csv
 import yugioh
 import sqlite3
+import random
+import pprint
 
-app = Flask(__name__)
+def main():
+    # database
+    # load 2 desk to list
+    # shuffle 2 decks
+    
+    # establish connection to database
+    conn = None
+    try:
+        conn = sqlite3.connect("Yugidb.db")
+    except Error as e:
+        print(e)
 
-@app.route("/")
-def hello():
-    return "Hello, World!"
+    cur = conn.cursor()
+    
+    # query database
+    cur.execute("SELECT name FROM deck1")
+    rows = cur.fetchall()
+    
+    cur.execute("SELECT name FROM deck2")
+    rows2 = cur.fetchall()
+    
+    # print (rows)
+    
+    # clean data from database
+    # create 2 decks
+    
+    deck1 = [row[0] for row in rows]
+    # print ("\nDeck 1\n")
+    # pprint.pprint (deck1)
+    
+    deck2 = [row[0] for row in rows2]
+    # print ("\nDeck 2\n")
+    # pprint.pprint (deck2)
+    # print (rows2)
+    
+    # shuffle to two decks
+    random.shuffle(deck1)
+    random.shuffle(deck2)
+    
+    pprint.pprint (deck1)
+    pprint.pprint (deck2)
+    
 
+if __name__ == "__main__":
+    main()
+    
+'''
 @app.route("/getDeck")
 def getDeck():
     conn = None
@@ -39,7 +80,9 @@ def deck(card):
     url = "https://static-7.studiobebop.net/ygo_data/card_images/{}.jpg".format(card.capitalize())
     print (url)
     return "<p>Hello World</p>"
-    
+
+'''
+   
 # read from SQLite3 to list
 # shuffle (randomize) list
 
