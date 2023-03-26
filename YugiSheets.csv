@@ -1,0 +1,51 @@
+Card number,English name,Japanese name,Rarity,Category,Qty
+KA-01,"""Kaiser Sea Horse""",「カイザー・シーホース」,Ultra Rare,Effect Monster,1
+KA-02,"""Vampire Lord""",「ヴァンパイア・ロード」,Ultra Rare,Effect Monster,1
+KA-03,"""Blue-Eyes White Dragon""",「青眼の白龍」,Common,Normal Monster,1
+KA-04,"""Blue-Eyes White Dragon"" (Chinese)",「青眼の白龍」,Common,Normal Monster,1
+KA-05,"""Blue-Eyes White Dragon"" (Asian-English)",「青眼の白龍」,Common,Normal Monster,1
+KA-06,"""Vorse Raider""",「ブラッド・ヴォルス」,Common,Normal Monster,1
+KA-07,"""Steel Ogre Grotto #2""",「鉄腕ゴーレム」,Common,Normal Monster,1
+KA-08,"""La Jinn the Mystical Genie of the Lamp""",「ランプの魔精・ラ・ジーン」,Common,Normal Monster,2
+KA-09,"""Battle Ox""",「ミノタウルス」,Super Rare,Normal Monster,1
+KA-10,"""Saggi the Dark Clown""",「闇・道化師のサギー」,Common,Normal Monster,1
+KA-11,"""Ryu-Kishin Powered""",「ガーゴイル・パワード」,Common,Normal Monster,1
+KA-12,"""Cyber-Stein""",「デビル・フランケン」,Common,Effect Monster,1
+KA-13,"""Sangan""",「クリッター」,Common,Effect Monster,2
+KA-14,"""Gilasaurus""",「俊足のギラザウルス」,Common,Effect Monster,1
+KA-15,"""Invitation to a Dark Sleep""",「暗黒の眠りを誘うルシファー」,Common,Effect Monster,1
+KA-16,"""Ancient Lamp""",「マジック・ランプ」,Common,Effect Monster,1
+KA-17,"""Heavy Storm""",「大嵐」,Common,Normal Spell Card,1
+KA-18,"""Monster Reborn""",「死者蘇生」,Common,Normal Spell Card,1
+KA-19,"""Premature Burial""",「早すぎた埋葬」,Common,Equip Spell Card,1
+KA-20,"""Graceful Charity""",「天使の施し」,Common,Normal Spell Card,2
+KA-21,"""Tribute to The Doomed""",「死者への手向け」,Common,Normal Spell Card,1
+KA-22,"""Mesmeric Control""",「催眠術」,Common,Normal Spell Card,1
+KA-23,"""Megamorph""",「巨大化」,Common,Equip Spell Card,1
+KA-24,"""Soul Exchange""",「クロス・ソウル」,Common,Normal Spell Card,1
+KA-25,"""Ekibyo Drakmord""",「疫病ウィルス ブラックダスト」,Common,Equip Spell Card,1
+KA-26,"""The Shallow Grave""",「浅すぎた墓穴」,Common,Normal Spell Card,1
+KA-27,"""Nobleman of Extermination""",「撲滅の使徒」,Common,Normal Spell Card,2
+KA-28,"""Nobleman of Crossout""",「抹殺の使徒」,Common,Normal Spell Card,1
+KA-29,"""Dark Hole""",「ブラック・ホール」,Common,Normal Spell Card,1
+KA-30,"""Snatch Steal""",「強奪」,Common,Equip Spell Card,1
+KA-31,"""Gift of The Mystical Elf""",「ホーリー・エルフの祝福」,Common,Normal Trap Card,1
+KA-32,"""Riryoku Field""",「フォースフィールド」,Common,Counter Trap Card,1
+KA-33,"""Negate Attack""",「攻撃の無力化」,Common,Counter Trap Card,1
+KA-34,"""Ring of Destruction""",「破壊輪」,Common,Normal Trap Card,1
+KA-35,"""Shadow Spell""",「闇の呪縛」,Common,Continuous Trap Card,1
+KA-36,"""Crush Card Virus""",「死のデッキ破壊ウイルス」,Common,Normal Trap Card,1
+KA-37,"""Blue-Eyes Ultimate Dragon"" (Replica)",「青眼の究極竜」,Common,Fusion Monster,1
+KA-38,"""Gadget Soldier""",「ガジェット・ソルジャー」,Common,Normal Monster,1
+KA-39,"""Versago the Destroyer""",「破壊神 ヴァサーゴ」,Common,Effect Monster,1
+KA-40,"""Needle Worm""",「ニードルワーム」,Common,Flip monster,2
+KA-41,"""The Wicked Worm Beast""",「邪悪なるワーム・ビースト」,Common,Effect Monster,1
+KA-42,"""Hiro's Shadow Scout""",「悪魔の偵察者」,Common,Flip monster,2
+KA-43,"""Morphing Jar #2""",「カオスポッド」,Common,Flip monster,1
+KA-44,"""Summoner of Illusions""",「幻想召喚師」,Common,Flip monster,1
+KA-45,"""Lord of D.""",「ロード・オブ・ドラゴン－ドラゴンの支配者－」,Common,Effect Monster,1
+KA-46,"""Man-Eater Bug""",「人喰い虫」,Common,Flip monster,1
+KA-47,"""The Flute of Summoning Dragon""",「ドラゴンを呼ぶ笛」,,Normal Spell Card,1
+KA-48,"""Fairy Meteor Crush""",「メテオ・ストライク」,Common,Equip Spell Card,1
+KA-49,"""Polymerization""",「融合」,Common,Normal Spell Card,1
+KA-50,"""Light of Intervention""",「聖なる輝き」,Common,Continuous Trap Card,1

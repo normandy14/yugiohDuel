@@ -1,0 +1,51 @@
+Card number,Name,Rarity,Category
+SDY-001,"""Mystical Elf""",Common,Normal Monster
+SDY-002,"""Feral Imp""",Common,Normal Monster
+SDY-003,"""Winged Dragon, Guardian of the Fortress #1""",Common,Normal Monster
+SDY-004,"""Summoned Skull""",Common,Normal Monster
+SDY-005,"""Beaver Warrior""",Common,Normal Monster
+SDY-006,"""Dark Magician""",Ultra Rare,Normal Monster
+SDY-007,"""Gaia The Fierce Knight""",Common,Normal Monster
+SDY-008,"""Curse of Dragon""",Common,Normal Monster
+SDY-009,"""Celtic Guardian""",Common,Normal Monster
+SDY-010,"""Mammoth Graveyard""",Common,Normal Monster
+SDY-011,"""Great White""",Common,Normal Monster
+SDY-012,"""Silver Fang""",Common,Normal Monster
+SDY-013,"""Giant Soldier of Stone""",Common,Normal Monster
+SDY-014,"""Dragon Zombie""",Common,Normal Monster
+SDY-015,"""Doma The Angel of Silence""",Common,Normal Monster
+SDY-016,"""Ansatsu""",Common,Normal Monster
+SDY-017,"""Witty Phantom""",Common,Normal Monster
+SDY-018,"""Claw Reacher""",Common,Normal Monster
+SDY-019,"""Mystic Clown""",Common,Normal Monster
+SDY-020,"""Sword of Dark Destruction""",Common,Equip Spell Card
+SDY-021,"""Book of Secret Arts""",Common,Equip Spell Card
+SDY-022,"""Dark Hole""",Common,Normal Spell Card
+SDY-023,"""Dian Keto the Cure Master""",Common,Normal Spell Card
+SDY-024,"""Ancient Elf""",Common,Normal Monster
+SDY-025,"""Magical Ghost""",Common,Normal Monster
+SDY-026,"""Fissure""",Common,Normal Spell Card
+SDY-027,"""Trap Hole""",Common,Normal Trap Card
+SDY-028,"""Two-Pronged Attack""",Common,Normal Trap Card
+SDY-029,"""De-Spell""",Common,Normal Spell Card
+SDY-030,"""Monster Reborn""",Common,Normal Spell Card
+SDY-031,"""Reinforcements""",Common,Normal Trap Card
+SDY-032,"""Change of Heart""",Common,Normal Spell Card
+SDY-033,"""The Stern Mystic""",Common,Flip monster
+SDY-034,"""Wall of Illusion""",Common,Effect Monster
+SDY-035,"""Neo the Magic Swordsman""",Common,Normal Monster
+SDY-036,"""Baron of the Fiend Sword""",Common,Normal Monster
+SDY-037,"""Man-Eating Treasure Chest""",Common,Normal Monster
+SDY-038,"""Sorcerer of the Doomed""",Common,Normal Monster
+SDY-039,"""Last Will""",Common,Normal Spell Card
+SDY-040,"""Waboku""",Common,Normal Trap Card
+SDY-041,"""Soul Exchange""",Super Rare,Normal Spell Card
+SDY-042,"""Card Destruction""",Super Rare,Normal Spell Card
+SDY-043,"""Trap Master""",Common,Flip monster
+SDY-044,"""Dragon Capture Jar""",Common,Continuous Trap Card
+SDY-045,"""Yami""",Common,Field Spell Card
+SDY-046,"""Man-Eater Bug""",Common,Flip monster
+SDY-047,"""Reverse Trap""",Common,Normal Trap Card
+SDY-048,"""Remove Trap""",Common,Normal Spell Card
+SDY-049,"""Castle Walls""",Common,Normal Trap Card
+SDY-050,"""Ultimate Offering""",Common,Continuous Trap Card
