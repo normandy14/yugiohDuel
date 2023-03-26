@@ -3,12 +3,27 @@ import sqlite3
 import random
 import pprint
 
-def main():
-    # database
-    # load 2 desk to list
-    # shuffle 2 decks
+class Game:
+    # instance variables
+    def __init__(self, deck1, deck2):
+        self.deck1 = deck1
+        self.deck2 = deck2
+        self.hand1 = []
+        self.hand2 = []
+        self.loadHands()
     
-    # establish connection to database
+    def loadHands(self):
+        self.hand1 = self.deck1[0:5]
+        self.hand2 = self.deck2[0:5]
+        
+        self.deck1 = self.deck1[5:]
+        self.deck2 = self.deck2[5:]
+        
+        
+# Functions for Game 
+
+def DeckSetup():
+    # Setup for database
     conn = None
     try:
         conn = sqlite3.connect("Yugidb.db")
@@ -16,72 +31,39 @@ def main():
         print(e)
 
     cur = conn.cursor()
-    
-    # query database
+
     cur.execute("SELECT name FROM deck1")
     rows = cur.fetchall()
     
     cur.execute("SELECT name FROM deck2")
     rows2 = cur.fetchall()
     
-    # print (rows)
-    
-    # clean data from database
-    # create 2 decks
-    
+    # Setup the decks
     deck1 = [row[0] for row in rows]
-    # print ("\nDeck 1\n")
-    # pprint.pprint (deck1)
-    
     deck2 = [row[0] for row in rows2]
-    # print ("\nDeck 2\n")
-    # pprint.pprint (deck2)
-    # print (rows2)
-    
+
     # shuffle to two decks
     random.shuffle(deck1)
     random.shuffle(deck2)
     
-    pprint.pprint (deck1)
-    pprint.pprint (deck2)
+    decks = [deck1, deck2]
+    return decks
+
+
+def main():
+    decks = DeckSetup()
+    deck1 = decks[0]
+    deck2 = decks[1]
+    game = Game(deck1, deck2)
+    # pprint.pprint(deck1)
+    
+    print (game.hand1)
+    print (game.hand2)
     
 
 if __name__ == "__main__":
     main()
     
-'''
-@app.route("/getDeck")
-def getDeck():
-    conn = None
-    try:
-        conn = sqlite3.connect("Yugidb.db")
-    except Error as e:
-        print(e)
-
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM deck1")
-
-    rows = cur.fetchall()
-
-    for row in rows:
-        print(row)
-    return "<p>Got deck</p>"
-
-@app.route("/deck/<card>")
-def deck(card):
-    card2 = yugioh.get_card("Winged Dragon, Guardian of the Fortress #1") #Accepts both name and ID
-    if card2.type != "Spell Card" and card2.type != "Trap Card":
-        print(card2.name) #Returns "The Wicked Dreadroot"
-        print(card2.archetype) #Returns "Wicked God"
-        print(card2.attack) #Returns "4000"
-    else:
-        print(card2.name)
-        print(card2.description)
-    url = "https://static-7.studiobebop.net/ygo_data/card_images/{}.jpg".format(card.capitalize())
-    print (url)
-    return "<p>Hello World</p>"
-
-'''
    
 # read from SQLite3 to list
 # shuffle (randomize) list
