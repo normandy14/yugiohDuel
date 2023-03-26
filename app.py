@@ -1,12 +1,30 @@
 from flask import Flask, redirect, url_for
 import csv
 import yugioh
+import sqlite3
 
 app = Flask(__name__)
 
 @app.route("/")
 def hello():
     return "Hello, World!"
+
+@app.route("/getDeck")
+def getDeck():
+    conn = None
+    try:
+        conn = sqlite3.connect("Yugidb.db")
+    except Error as e:
+        print(e)
+
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM deck1")
+
+    rows = cur.fetchall()
+
+    for row in rows:
+        print(row)
+    return "<p>Got deck</p>"
 
 @app.route("/deck/<card>")
 def deck(card):
