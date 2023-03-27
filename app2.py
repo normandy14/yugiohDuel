@@ -12,6 +12,8 @@ class Game:
         self.hand2 = []
         self.loadHands()
         self.turn = 1
+        self.zone1 = []
+        self.zone2 = []
     
     def loadHands(self):
         self.hand1 = self.deck1[0:5]
@@ -33,6 +35,25 @@ class Game:
             self.turn = 2
         else:
             self.turn = 1
+            
+    def setCardToZone(self):
+        userInput = -1
+        if self.turn == 1:
+            print (self.hand1)
+            lengthOfHand = len(self.hand1) - 1
+            # print (lengthOfHand)
+            while (userInput >= lengthOfHand or userInput < 0):
+                print ("select from 0 to {}".format(lengthOfHand))
+                userInput = int(input("Select card to play: "))
+                print (self.hand1[userInput])
+        elif self.turn == 2:
+            print (self.hand2)
+            lengthOfHand = len(self.hand2) - 1
+            # print (lengthOfHand)
+            while (userInput >= lengthOfHand or userInput < 0):
+                print ("select from 0 to {}".format(lengthOfHand))
+                userInput = int(input("Select card to play: "))
+                print (self.hand2[userInput])
         
 # Functions for Game 
 
@@ -71,14 +92,17 @@ def main():
     game = Game(deck1, deck2)
     # pprint.pprint(deck1)
     
-    print (game.hand1)
-    print (game.hand2)
+    # print (game.hand1)
+    # print (game.hand2)
     
     game.draw()
-    print (game.hand1)
+    # print (game.hand1)
+    game.setCardToZone()
     game.endTurn()
     game.draw()
-    print (game.hand2)
+    # print (game.hand2)
+    game.setCardToZone()
+    game.endTurn()
     
 
 if __name__ == "__main__":
