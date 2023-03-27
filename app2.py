@@ -11,6 +11,7 @@ class Game:
         self.hand1 = []
         self.hand2 = []
         self.loadHands()
+        self.turn = 1
     
     def loadHands(self):
         self.hand1 = self.deck1[0:5]
@@ -18,7 +19,20 @@ class Game:
         
         self.deck1 = self.deck1[5:]
         self.deck2 = self.deck2[5:]
-        
+    
+    def draw(self):
+        if self.turn == 1:
+            self.hand1 = self.hand1 + self.deck1[:1]
+            self.deck1 = self.deck1[1:]
+        elif self.turn == 2:
+            self.hand2 = self.hand2 + self.deck2[:1]
+            self.deck2 = self.deck2[1:]
+    
+    def endTurn(self):
+        if self.turn == 1:
+            self.turn = 2
+        else:
+            self.turn = 1
         
 # Functions for Game 
 
@@ -60,6 +74,12 @@ def main():
     print (game.hand1)
     print (game.hand2)
     
+    game.draw()
+    print (game.hand1)
+    game.endTurn()
+    game.draw()
+    print (game.hand2)
+    
 
 if __name__ == "__main__":
     main()
@@ -68,11 +88,11 @@ if __name__ == "__main__":
 # read from SQLite3 to list
 # shuffle (randomize) list
 
-# create empty hand
-# draw 5 from deck to hand
+# create 2 hands
+# Draw on your turn
+# end turn
 
-# end your turn
-# start opponent turn 
+# Draw on opponnet turn
 # end opponent turn
 
 # start your turn
