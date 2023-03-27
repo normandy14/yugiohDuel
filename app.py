@@ -28,7 +28,7 @@ def getDeck():
 
 @app.route("/deck/<card>")
 def deck(card):
-    card2 = yugioh.get_card("Winged Dragon, Guardian of the Fortress #1") #Accepts both name and ID
+    card2 = yugioh.get_card("Mirror Force") #Accepts both name and ID
     if card2.type != "Spell Card" and card2.type != "Trap Card":
         print(card2.name) #Returns "The Wicked Dreadroot"
         print(card2.archetype) #Returns "Wicked God"

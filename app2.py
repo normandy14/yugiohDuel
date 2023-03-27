@@ -36,13 +36,15 @@ class Game:
         else:
             self.turn = 1
             
+    # create monster zone1 and monster zone 2
+    # set down selected card into monster zone 1 or monster zone2
     def setCardToZone(self):
         userInput = -1
         if self.turn == 1:
             print (self.hand1)
             lengthOfHand = len(self.hand1) - 1
             # print (lengthOfHand)
-            while (userInput >= lengthOfHand or userInput < 0):
+            while (userInput > lengthOfHand or userInput < 0):
                 print ("select from 0 to {}".format(lengthOfHand))
                 userInput = int(input("Select card to play: "))
                 print (self.hand1[userInput])
@@ -50,7 +52,7 @@ class Game:
             print (self.hand2)
             lengthOfHand = len(self.hand2) - 1
             # print (lengthOfHand)
-            while (userInput >= lengthOfHand or userInput < 0):
+            while (userInput > lengthOfHand or userInput < 0):
                 print ("select from 0 to {}".format(lengthOfHand))
                 userInput = int(input("Select card to play: "))
                 print (self.hand2[userInput])
