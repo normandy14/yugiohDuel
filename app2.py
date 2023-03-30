@@ -30,7 +30,7 @@ class Game:
             self.hand2 = self.hand2 + self.deck2[:1]
             self.deck2 = self.deck2[1:]
     
-    def endTurn(self):
+    def changeTurn(self):
         if self.turn == 1:
             self.turn = 2
         else:
@@ -48,6 +48,7 @@ class Game:
                 print ("select from 0 to {}".format(lengthOfHand))
                 userInput = int(input("Select card to play: "))
                 print (self.hand1[userInput])
+                self.hand1.pop(userInput)
         elif self.turn == 2:
             print (self.hand2)
             lengthOfHand = len(self.hand2) - 1
@@ -56,6 +57,7 @@ class Game:
                 print ("select from 0 to {}".format(lengthOfHand))
                 userInput = int(input("Select card to play: "))
                 print (self.hand2[userInput])
+                self.hand2.pop(userInput)
         
 # Functions for Game 
 
@@ -97,15 +99,11 @@ def main():
     # print (game.hand1)
     # print (game.hand2)
     
-    game.draw()
-    # print (game.hand1)
-    game.setCardToZone()
-    game.endTurn()
-    game.draw()
-    # print (game.hand2)
-    game.setCardToZone()
-    game.endTurn()
-    
+    while (1 == 1):
+        game.draw()
+        # print (game.hand1)
+        game.setCardToZone()
+        game.changeTurn()
 
 if __name__ == "__main__":
     main()
