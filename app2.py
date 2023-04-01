@@ -69,22 +69,38 @@ class Game:
                 # print (self.zone2)
                 # self.doBattlePhase()
                 
+    def changePhase(self):
+        if self.turn == 1:
+            lengthOfZone1 = len(self.zone1) - 1
+            print ("select up to {} to change positions".format(lengthOfZone1 + 1))
+            userInput = int(input("Select card to switch positions with: "))
+            cardToSwitch =  self.zone1[userInput]
+            print ("card to switch is {}".format(cardToSwitch))
+            
+        elif self.turn == 2:
+            lengthOfZone2 = len(self.zone2) - 1
+            print ("select up to {} to change positions".format(lengthOfZone2 + 1))
+            userInput = int(input("Select card to switch positions with:: "))
+            cardToSwitch =  self.zone2[userInput]
+            print ("card to switch is {}".format(cardToSwitch))
                 
     def doBattlePhase(self):
         if self.turn == 1:
             print ("Zone to attack with is {}".format(self.zone1))
             lengthOfZone1 = len(self.zone1) - 1
             print ("select 1 from {}".format(lengthOfZone1))
-            userInput = int(input("Select card to attack with: "))
-            cardAttack = self.zone1[userInput]
+            userInput1 = int(input("Select card to attack with: "))
+            cardAttack = self.zone1[userInput1]
             print ("card to attack with is {}".format(cardAttack))
             
             print ("Zone to attack into is {}".format(self.zone2))
             lengthOfZone2 = len(self.zone2) - 1
             print ("select 1 from {}".format(lengthOfZone2))
             userInput2 = int(input("Select card to attack into: "))
-            cardAttackInto = self.zone2[userInput]
+            cardAttackInto = self.zone2[userInput2]
             print ("card to attack into is {}".format(cardAttackInto))
+            
+            print ("{} attacks into {}".format(cardAttack, cardAttackInto))
             
        
         elif self.turn == 2:
@@ -97,12 +113,13 @@ class Game:
             
             print ("zone to attack into is {}".format(self.zone1))
             lengthOfZone1 = len(self.zone1) - 1
-            print ("select from 0 to {}".format(lengthOfZone1))
+            print ("select 1 from {}".format(lengthOfZone1))
             userInput1 = int(input("Select card to attack into: "))
-            cardAttackInto = self.zone1[userInput]
+            cardAttackInto = self.zone1[userInput1]
             # print (cardAttackInto)
             print ("card to attack into is {}".format(cardAttackInto))
             
+            print ("{} attacks into {}".format(cardAttack, cardAttackInto))
             
 # Functions for Game 
 
@@ -145,15 +162,18 @@ def main():
     # print (game.hand2)
     
     game.draw()
+    # game.mainPhase()
     game.setCardToZone()
     game.changeTurn()
     # game.firstTurn = False
     while (1 == 1):
         game.draw()
+        # game.changePhase()
         # print (game.hand1)
         game.setCardToZone()
-        game.changeTurn()
         game.doBattlePhase()
+        game.changeTurn()
+   
 
 if __name__ == "__main__":
     main()
