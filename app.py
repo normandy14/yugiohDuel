@@ -25,6 +25,8 @@ class Game:
         self.turn = 1
         self.zone1 = []
         self.zone2 = []
+        self.lifePointsP1 = 8000
+        self.lifePointsP2 = 8000
         # self.firstTurn = True
     
     def draw(self):
@@ -69,6 +71,11 @@ class Game:
                     cardDefense = yugioh.get_card(card_name = cardToAttackInto)
                     lifePointDifference = cardOffense.attack - cardDefense.attack
                     
+                    if (lifePointDifference > 0):
+                        self.lifePointsP2 -= lifePointDifference
+                    elif (lifePointDifference < 0):
+                        self.lifePointsP1 -= abs(lifePointDifference)
+                    
                     print ("{} attacks into {} for {} damage".format(cardToAttackWith, cardToAttackInto, lifePointDifference))
                     
                     if (cardOffense.attack > cardDefense.attack):
@@ -82,6 +89,9 @@ class Game:
                         self.zone1.pop(choiceOfCardOffense)
                 else:
                     print ("Direct Attack!")
+                    cardToAttackWith = self.zone1[choiceOfCardOffense]
+                    cardOffense = yugioh.get_card(card_name = cardToAttackWith)
+                    self.lifePointsP2 -= cardOffense.attack
                 # select card
                 # attack with card
               
@@ -101,6 +111,11 @@ class Game:
                     cardDefense = yugioh.get_card(card_name = cardToAttackInto)
                     lifePointDifference = cardOffense.attack - cardDefense.attack
                     
+                    if (lifePointDifference > 0):
+                        self.lifePointsP1 -= lifePointDifference
+                    elif (lifePointDifference < 0):
+                        self.lifePointsP2 -= abs(lifePointDifference)
+                    
                     print ("{} attacks into {} for {} damage".format(cardToAttackWith, cardToAttackInto, lifePointDifference))
                     if (cardOffense.attack > cardDefense.attack):
                         # cardDefense popped
@@ -117,10 +132,17 @@ class Game:
                     
                 else:
                     print ("Direct Attack!")
+                    cardToAttackWith = self.zone2[choiceOfCardOffense]
+                    cardOffense = yugioh.get_card(card_name = cardToAttackWith)
+                    self.lifePointsP1 -= cardOffense.attack
+               
         
         # print (self.turn)
+        print ("{} turn".format(self.turn))
         print (self.zone1)
         print (self.zone2)
+        print ("P1 LP = {}".format(self.lifePointsP1))
+        print ("P2 LP = {}".format(self.lifePointsP2))
         
     def end(self):
         if self.turn == 1:
