@@ -7,6 +7,13 @@ import pprint
 # Attack card difference
 # lifepoint deduction
 
+# if lifepoint negative, current player takes damage
+# if lifepoint positive, opponent playeer takes damage
+
+# destroy defensive card if attk1 > attk2 
+# destroy both if equal
+# destroy offensive if attk1 < attk2
+
 class Game:
     # instance variables
     def __init__(self, deck1, deck2):
@@ -51,42 +58,69 @@ class Game:
             print (self.zone1)
             zone1Length = len(self.zone1)
             if (zone1Length > 0):
-                choiceOfCard = int(input("Select a card to attack with: "))
-                cardToAttackWith = self.zone1[choiceOfCard]
+                choiceOfCardOffense = int(input("Select a card to attack with: "))
+                cardToAttackWith = self.zone1[choiceOfCardOffense]
                 if (len(self.zone2) > 0):
                     print (self.zone2)
-                    choiceOfCard = int(input("Select a card to attack into: "))
-                    cardToAttackInto = self.zone2[choiceOfCard]
+                    choiceOfCardDefense = int(input("Select a card to attack into: "))
+                    cardToAttackInto = self.zone2[choiceOfCardDefense]
                     
                     cardOffense = yugioh.get_card(card_name = cardToAttackWith)
                     cardDefense = yugioh.get_card(card_name = cardToAttackInto)
                     lifePointDifference = cardOffense.attack - cardDefense.attack
                     
                     print ("{} attacks into {} for {} damage".format(cardToAttackWith, cardToAttackInto, lifePointDifference))
+                    
+                    if (cardOffense.attack > cardDefense.attack):
+                        self.zone2.pop(choiceOfCardDefense)
+                    elif (cardOffense.attack == cardDefense.attack):
+                        # both popped
+                        self.zone1.pop(choiceOfCardOffense)
+                        self.zone2.pop(choiceOfCardDefense)
+                    else:
+                        # cardOffense < cardDefense 
+                        self.zone1.pop(choiceOfCardOffense)
                 else:
                     print ("Direct Attack!")
                 # select card
                 # attack with card
+              
             
         elif self.turn == 2:
             print (self.zone2)
             zone2Length = len(self.zone2)
             if (zone2Length > 0):
-                choiceOfCard = int(input("Select a card to attack with: "))
-                cardToAttackWith = self.zone2[choiceOfCard]
+                choiceOfCardOffense = int(input("Select a card to attack with: "))
+                cardToAttackWith = self.zone2[choiceOfCardOffense]
                 if (len(self.zone1) > 0):
                     print (self.zone1)
-                    choiceOfCard = int(input("Select a card to attack into: "))
-                    cardToAttackInto = self.zone1[choiceOfCard]
+                    choiceOfCardDefense = int(input("Select a card to attack into: "))
+                    cardToAttackInto = self.zone1[choiceOfCardDefense]
                     
                     cardOffense = yugioh.get_card(card_name = cardToAttackWith)
                     cardDefense = yugioh.get_card(card_name = cardToAttackInto)
                     lifePointDifference = cardOffense.attack - cardDefense.attack
                     
                     print ("{} attacks into {} for {} damage".format(cardToAttackWith, cardToAttackInto, lifePointDifference))
+                    if (cardOffense.attack > cardDefense.attack):
+                        # cardDefense popped
+                         self.zone1.pop(choiceOfCardDefense)
+                    elif (cardOffense.attack == cardDefense.attack):
+                        # both popped
+                        self.zone2.pop(choiceOfCardOffense)
+                        self.zone1.pop(choiceOfCardDefense)
+                    else:
+                        # cardOffense < cardDefense 
+                        self.zone2.pop(choiceOfCardOffense)
+                        
+                        
                     
                 else:
                     print ("Direct Attack!")
+        
+        # print (self.turn)
+        print (self.zone1)
+        print (self.zone2)
         
     def end(self):
         if self.turn == 1:
