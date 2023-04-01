@@ -61,8 +61,8 @@ class Game:
             
         elif self.turn == 2:
             print (self.zone2)
-            zone1Length = len(self.zone2)
-            if (zone1Length > 0):
+            zone2Length = len(self.zone2)
+            if (zone2Length > 0):
                 choiceOfCard = int(input("Select a card to attack with: "))
                 cardToAttackWith = self.zone2[choiceOfCard]
                 if (len(self.zone1) > 0):
