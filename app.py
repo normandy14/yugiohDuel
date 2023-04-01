@@ -3,6 +3,10 @@ import sqlite3
 import random
 import pprint
 
+# ToDo:
+# Attack card difference
+# lifepoint deduction
+
 class Game:
     # instance variables
     def __init__(self, deck1, deck2):
@@ -53,7 +57,12 @@ class Game:
                     print (self.zone2)
                     choiceOfCard = int(input("Select a card to attack into: "))
                     cardToAttackInto = self.zone2[choiceOfCard]
-                    print ("{} attacks into {}".format(cardToAttackWith, cardToAttackInto))
+                    
+                    cardOffense = yugioh.get_card(card_name = cardToAttackWith)
+                    cardDefense = yugioh.get_card(card_name = cardToAttackInto)
+                    lifePointDifference = cardOffense.attack - cardDefense.attack
+                    
+                    print ("{} attacks into {} for {} damage".format(cardToAttackWith, cardToAttackInto, lifePointDifference))
                 else:
                     print ("Direct Attack!")
                 # select card
@@ -69,7 +78,13 @@ class Game:
                     print (self.zone1)
                     choiceOfCard = int(input("Select a card to attack into: "))
                     cardToAttackInto = self.zone1[choiceOfCard]
-                    print ("{} attacks into {}".format(cardToAttackWith, cardToAttackInto))
+                    
+                    cardOffense = yugioh.get_card(card_name = cardToAttackWith)
+                    cardDefense = yugioh.get_card(card_name = cardToAttackInto)
+                    lifePointDifference = cardOffense.attack - cardDefense.attack
+                    
+                    print ("{} attacks into {} for {} damage".format(cardToAttackWith, cardToAttackInto, lifePointDifference))
+                    
                 else:
                     print ("Direct Attack!")
         
