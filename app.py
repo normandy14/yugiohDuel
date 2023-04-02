@@ -14,6 +14,15 @@ import pprint
 # destroy both if equal
 # destroy offensive if attk1 < attk2
 
+class Card:
+    # instance variables
+    def __init__(self, cardName, position):
+        self.cardName = cardName
+        self.position = position
+    
+    def __repr__(self):
+        return self.cardName
+
 class Game:
     # instance variables
     def __init__(self, deck1, deck2):
@@ -45,15 +54,23 @@ class Game:
             player1HandLength = len(self.hand1)
             choiceOfCard = int(input("Select a card to play: "))
             cardToSet = self.hand1[choiceOfCard]
+            # position to set in
+            positionToSetIn = int(input("Select 0 for attack or 1 for defense: "))
             self.hand1.pop(choiceOfCard)
-            self.zone1.append(cardToSet)
+            card = Card(cardToSet, positionToSetIn)
+            self.zone1.append(card)
+            # print (self.zone1)
         elif self.turn == 2:
             print (self.hand2)
             player1HandLength = len(self.hand2)
             choiceOfCard = int(input("Select a card to play: "))
             cardToSet = self.hand2[choiceOfCard]
+            # position to set in
+            positionToSetIn = int(input("Select 0 for attack or 1 for defense: "))
             self.hand2.pop(choiceOfCard)
-            self.zone2.append(cardToSet)
+            card = Card(cardToSet, positionToSetIn)
+            self.zone2.append(card)
+            # print (self.zone2)
     
     def battle(self):
         if self.turn == 1:
@@ -62,10 +79,12 @@ class Game:
             if (zone1Length > 0):
                 choiceOfCardOffense = int(input("Select a card to attack with: "))
                 cardToAttackWith = self.zone1[choiceOfCardOffense]
+                print (cardToAttackWith)
                 if (len(self.zone2) > 0):
                     print (self.zone2)
                     choiceOfCardDefense = int(input("Select a card to attack into: "))
                     cardToAttackInto = self.zone2[choiceOfCardDefense]
+                    # print (cardToAttackInto)
                     
                     cardOffense = yugioh.get_card(card_name = cardToAttackWith)
                     cardDefense = yugioh.get_card(card_name = cardToAttackInto)
@@ -89,7 +108,7 @@ class Game:
                         self.zone1.pop(choiceOfCardOffense)
                 else:
                     print ("Direct Attack!")
-                    cardToAttackWith = self.zone1[choiceOfCardOffense]
+                    cardToAttackWith = self.zone1[choiceOfCardOffense].name
                     cardOffense = yugioh.get_card(card_name = cardToAttackWith)
                     self.lifePointsP2 -= cardOffense.attack
                 # select card
@@ -102,10 +121,12 @@ class Game:
             if (zone2Length > 0):
                 choiceOfCardOffense = int(input("Select a card to attack with: "))
                 cardToAttackWith = self.zone2[choiceOfCardOffense]
+                # print (cardToAttackWith)
                 if (len(self.zone1) > 0):
                     print (self.zone1)
                     choiceOfCardDefense = int(input("Select a card to attack into: "))
                     cardToAttackInto = self.zone1[choiceOfCardDefense]
+                    # print (cardToAttackInto)
                     
                     cardOffense = yugioh.get_card(card_name = cardToAttackWith)
                     cardDefense = yugioh.get_card(card_name = cardToAttackInto)
@@ -132,13 +153,13 @@ class Game:
                     
                 else:
                     print ("Direct Attack!")
-                    cardToAttackWith = self.zone2[choiceOfCardOffense]
+                    cardToAttackWith = self.zone2[choiceOfCardOffense].name
                     cardOffense = yugioh.get_card(card_name = cardToAttackWith)
                     self.lifePointsP1 -= cardOffense.attack
                
         
         # print (self.turn)
-        print ("{} turn".format(self.turn))
+        print ("player {} turn".format(self.turn))
         print (self.zone1)
         print (self.zone2)
         print ("P1 LP = {}".format(self.lifePointsP1))
