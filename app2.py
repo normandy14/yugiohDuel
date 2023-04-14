@@ -33,12 +33,11 @@ class Person:
         self.loadHand()
 
     def loadHand(self):
-       print ("Load hand!")
+       # print ("Load hand!")
        self.hand = self.deck[0:5]
        self.deck = self.deck[5:]
 
     def draw(self):
-       print ("Draw time!")
        nextCard = self.deck[:1]
        # print (self.hand)
        print (nextCard)
@@ -54,7 +53,7 @@ class Game:
         self.turn = 1
 
     def draw(self):
-        # print ("Draw time!")
+        print ("Draw time!")
         if self.turn == 1:
             self.player1.draw()
         elif self.turn == 2:
@@ -63,7 +62,7 @@ class Game:
     def main(self):
         print ("Main Phase!")
         if self.turn == 1:
-            print (self.player1.hand)
+            # print (self.player1.hand)
             player1HandLength = len(self.player1.hand)
             choiceOfCard = int(input("Select a card to play: "))
             cardToSet = self.player1.hand[choiceOfCard]
@@ -74,7 +73,7 @@ class Game:
             self.player1.zone.append(card)
             # print (self.zone1)
         elif self.turn == 2:
-            print (self.player2.hand)
+            # print (self.player2.hand)
             player1HandLength = len(self.player2.hand)
             choiceOfCard = int(input("Select a card to play: "))
             cardToSet = self.player2.hand[choiceOfCard]
@@ -86,12 +85,13 @@ class Game:
             # print (self.zone2)
 
     def battle(self):
+        print ("Battle Phase!")
         if self.turn == 1:
             print (self.player1.zone)
             zone1Length = len(self.player1.zone)
             if (zone1Length > 0):
                 choiceOfCardOffense = int(input("Select a card to attack with: "))
-                cardToAttackWith = self.player1.zones[choiceOfCardOffense]
+                cardToAttackWith = self.player1.zone[choiceOfCardOffense]
                 print (cardToAttackWith)
                 if (len(self.player2.zone) > 0):
                     print (self.player2.zone)
@@ -121,7 +121,8 @@ class Game:
                         self.player1.zone.pop(choiceOfCardOffense)
                 else:
                     print ("Direct Attack!")
-                    cardToAttackWith = self.player1.zone[choiceOfCardOffense].name
+                    print (self.player1.zone[choiceOfCardOffense])
+                    cardToAttackWith = self.player1.zone[choiceOfCardOffense].cardName
                     cardOffense = yugioh.get_card(card_name = cardToAttackWith)
                     self.player2.lifePoints -= cardOffense.attack
                 # select card
@@ -166,7 +167,8 @@ class Game:
 
                 else:
                     print ("Direct Attack!")
-                    cardToAttackWith = self.player2.zone[choiceOfCardOffense].name
+                    print (self.player2.zone[choiceOfCardOffense])
+                    cardToAttackWith = self.player2.zone[choiceOfCardOffense].cardName
                     cardOffense = yugioh.get_card(card_name = cardToAttackWith)
                     self.player1.lifePoints -= cardOffense.attack
 
