@@ -3,125 +3,188 @@ import sqlite3
 import random
 import pprint
 
+# ToDo:
+# Attack card difference
+# lifepoint deduction
+
+# if lifepoint negative, current player takes damage
+# if lifepoint positive, opponent playeer takes damage
+
+# destroy defensive card if attk1 > attk2
+# destroy both if equal
+# destroy offensive if attk1 < attk2
+
+class Card:
+    # instance variables
+    def __init__(self, cardName, position):
+        self.cardName = cardName
+        self.position = position
+
+    def __repr__(self):
+        return self.cardName
+
+class Person:
+    # instance variables
+    def __init__(self, deck):
+        self.deck = deck
+        self.hand = []
+        self.zone = []
+        self.lifePoints = 8000
+        self.loadHand()
+
+    def loadHand(self):
+       print ("Load hand!")
+       self.hand = self.deck[0:5]
+       self.deck = self.deck[5:]
+
+    def draw(self):
+       print ("Draw time!")
+       nextCard = self.deck[:1]
+       # print (self.hand)
+       print (nextCard)
+       self.hand = self.hand + nextCard
+       print (self.hand)
+       self.deck = self.deck[1:] # pop the last card from the deck
+
 class Game:
     # instance variables
     def __init__(self, deck1, deck2):
-        self.deck1 = deck1
-        self.deck2 = deck2
-        self.hand1 = []
-        self.hand2 = []
-        self.loadHands()
+        self.player1 = Person(deck1)
+        self.player2 = Person(deck2)
         self.turn = 1
-        self.zone1 = []
-        self.zone2 = []
-        # self.firstTurn = True
-    
-    def loadHands(self):
-        self.hand1 = self.deck1[0:5]
-        self.hand2 = self.deck2[0:5]
-        
-        self.deck1 = self.deck1[5:]
-        self.deck2 = self.deck2[5:]
-    
+
     def draw(self):
-        print ("Draw time!")
+        # print ("Draw time!")
         if self.turn == 1:
-            self.hand1 = self.hand1 + self.deck1[:1]
-            self.deck1 = self.deck1[1:]
+            self.player1.draw()
         elif self.turn == 2:
-            self.hand2 = self.hand2 + self.deck2[:1]
-            self.deck2 = self.deck2[1:]
-    
-    def changeTurn(self):
+            self.player2.draw()
+
+    def main(self):
+        print ("Main Phase!")
+        if self.turn == 1:
+            print (self.player1.hand)
+            player1HandLength = len(self.player1.hand)
+            choiceOfCard = int(input("Select a card to play: "))
+            cardToSet = self.player1.hand[choiceOfCard]
+            # position to set in
+            positionToSetIn = int(input("Select 0 for attack or 1 for defense: "))
+            self.player1.hand.pop(choiceOfCard)
+            card = Card(cardToSet, positionToSetIn)
+            self.player1.zone.append(card)
+            # print (self.zone1)
+        elif self.turn == 2:
+            print (self.player2.hand)
+            player1HandLength = len(self.player2.hand)
+            choiceOfCard = int(input("Select a card to play: "))
+            cardToSet = self.player2.hand[choiceOfCard]
+            # position to set in
+            positionToSetIn = int(input("Select 0 for attack or 1 for defense: "))
+            self.player2.hand.pop(choiceOfCard)
+            card = Card(cardToSet, positionToSetIn)
+            self.player2.zone.append(card)
+            # print (self.zone2)
+
+    def battle(self):
+        if self.turn == 1:
+            print (self.player1.zone)
+            zone1Length = len(self.player1.zone)
+            if (zone1Length > 0):
+                choiceOfCardOffense = int(input("Select a card to attack with: "))
+                cardToAttackWith = self.player1.zones[choiceOfCardOffense]
+                print (cardToAttackWith)
+                if (len(self.player2.zone) > 0):
+                    print (self.player2.zone)
+                    choiceOfCardDefense = int(input("Select a card to attack into: "))
+                    cardToAttackInto = self.player2.zone[choiceOfCardDefense]
+                    # print (cardToAttackInto)
+
+                    cardOffense = yugioh.get_card(card_name = cardToAttackWith)
+                    cardDefense = yugioh.get_card(card_name = cardToAttackInto)
+                    lifePointDifference = cardOffense.attack - cardDefense.attack
+
+                    if (lifePointDifference > 0):
+                        self.player2.lifePoints -= lifePointDifference
+                    elif (lifePointDifference < 0):
+                        self.player1.lifePoints -= abs(lifePointDifference)
+
+                    print ("{} attacks into {} for {} damage".format(cardToAttackWith, cardToAttackInto, lifePointDifference))
+
+                    if (cardOffense.attack > cardDefense.attack):
+                        self.player2.zone.pop(choiceOfCardDefense)
+                    elif (cardOffense.attack == cardDefense.attack):
+                        # both popped
+                        self.player1.zone.pop(choiceOfCardOffense)
+                        self.player2.zone.pop(choiceOfCardDefense)
+                    else:
+                        # cardOffense < cardDefense
+                        self.player1.zone.pop(choiceOfCardOffense)
+                else:
+                    print ("Direct Attack!")
+                    cardToAttackWith = self.player1.zone[choiceOfCardOffense].name
+                    cardOffense = yugioh.get_card(card_name = cardToAttackWith)
+                    self.player2.lifePoints -= cardOffense.attack
+                # select card
+                # attack with card
+
+
+        elif self.turn == 2:
+            print (self.player2.zone)
+            zone2Length = len(self.player2.zone)
+            if (zone2Length > 0):
+                choiceOfCardOffense = int(input("Select a card to attack with: "))
+                cardToAttackWith = self.player2.zone[choiceOfCardOffense]
+                # print (cardToAttackWith)
+                if (len(self.player1.zone) > 0):
+                    print (self.player1.zone)
+                    choiceOfCardDefense = int(input("Select a card to attack into: "))
+                    cardToAttackInto = self.player1.zone[choiceOfCardDefense]
+                    # print (cardToAttackInto)
+
+                    cardOffense = yugioh.get_card(card_name = cardToAttackWith)
+                    cardDefense = yugioh.get_card(card_name = cardToAttackInto)
+                    lifePointDifference = cardOffense.attack - cardDefense.attack
+
+                    if (lifePointDifference > 0):
+                        self.player1.lifePoints -= lifePointDifference
+                    elif (lifePointDifference < 0):
+                        self.player2.lifePoints -= abs(lifePointDifference)
+
+                    print ("{} attacks into {} for {} damage".format(cardToAttackWith, cardToAttackInto, lifePointDifference))
+                    if (cardOffense.attack > cardDefense.attack):
+                        # cardDefense popped
+                         self.player1.zone.pop(choiceOfCardDefense)
+                    elif (cardOffense.attack == cardDefense.attack):
+                        # both popped
+                        self.player2.zone.pop(choiceOfCardOffense)
+                        self.player1.zone.pop(choiceOfCardDefense)
+                    else:
+                        # cardOffense < cardDefense
+                        self.player2.zone.pop(choiceOfCardOffense)
+
+
+
+                else:
+                    print ("Direct Attack!")
+                    cardToAttackWith = self.player2.zone[choiceOfCardOffense].name
+                    cardOffense = yugioh.get_card(card_name = cardToAttackWith)
+                    self.player1.lifePoints -= cardOffense.attack
+
+
+        # print (self.turn)
+        print ("player {} turn".format(self.turn))
+        print (self.player1.zone)
+        print (self.player2.zone)
+        print ("P1 LP = {}".format(self.player1.lifePoints))
+        print ("P2 LP = {}".format(self.player2.lifePoints))
+
+    def end(self):
         if self.turn == 1:
             self.turn = 2
-        else:
+        elif self.turn == 2:
             self.turn = 1
-        print ("Changed Turns!")
-            
-    # create monster zone1 and monster zone 2
-    # set down selected card into monster zone 1 or monster zone2
-    def setCardToZone(self):
-        userInput = -1
-        if self.turn == 1:
-            print (self.hand1)
-            lengthOfHand = len(self.hand1) - 1
-            # print (lengthOfHand)
-            while (userInput > lengthOfHand or userInput < 0):
-                print ("select from 0 to {}".format(lengthOfHand))
-                userInput = int(input("Select card to play: "))
-                print ("selected card is : {}".format(self.hand1[userInput]))
-                card = self.hand1.pop(userInput)
-                self.zone1.append(card)
-                # print (self.zone1)
-                # self.doBattlePhase()
-          
-        elif self.turn == 2:
-            print (self.hand2)
-            lengthOfHand = len(self.hand2) - 1
-            # print (lengthOfHand)
-            while (userInput > lengthOfHand or userInput < 0):
-                print ("select from 0 to {}".format(lengthOfHand))
-                userInput = int(input("Select card to play: "))
-                print ("selected card is : {}".format(self.hand2[userInput]))
-                card = self.hand2.pop(userInput)
-                self.zone2.append(card)
-                # print (self.zone2)
-                # self.doBattlePhase()
-                
-    def changePhase(self):
-        if self.turn == 1:
-            lengthOfZone1 = len(self.zone1) - 1
-            print ("select up to {} to change positions".format(lengthOfZone1 + 1))
-            userInput = int(input("Select card to switch positions with: "))
-            cardToSwitch =  self.zone1[userInput]
-            print ("card to switch is {}".format(cardToSwitch))
-            
-        elif self.turn == 2:
-            lengthOfZone2 = len(self.zone2) - 1
-            print ("select up to {} to change positions".format(lengthOfZone2 + 1))
-            userInput = int(input("Select card to switch positions with:: "))
-            cardToSwitch =  self.zone2[userInput]
-            print ("card to switch is {}".format(cardToSwitch))
-                
-    def doBattlePhase(self):
-        if self.turn == 1:
-            print ("Zone to attack with is {}".format(self.zone1))
-            lengthOfZone1 = len(self.zone1) - 1
-            print ("select 1 from {}".format(lengthOfZone1))
-            userInput1 = int(input("Select card to attack with: "))
-            cardAttack = self.zone1[userInput1]
-            print ("card to attack with is {}".format(cardAttack))
-            
-            print ("Zone to attack into is {}".format(self.zone2))
-            lengthOfZone2 = len(self.zone2) - 1
-            print ("select 1 from {}".format(lengthOfZone2))
-            userInput2 = int(input("Select card to attack into: "))
-            cardAttackInto = self.zone2[userInput2]
-            print ("card to attack into is {}".format(cardAttackInto))
-            
-            print ("{} attacks into {}".format(cardAttack, cardAttackInto))
-            
-       
-        elif self.turn == 2:
-            print ("zone to attack with is {}".format(self.zone2))
-            lengthOfZone2 = len(self.zone2) - 1
-            print ("select 1 from {}".format(lengthOfZone2))
-            userInput = int(input("Select card to attack with: "))
-            cardAttack = self.zone2[userInput]
-            print ("card to attack with is {}".format(cardAttack))
-            
-            print ("zone to attack into is {}".format(self.zone1))
-            lengthOfZone1 = len(self.zone1) - 1
-            print ("select 1 from {}".format(lengthOfZone1))
-            userInput1 = int(input("Select card to attack into: "))
-            cardAttackInto = self.zone1[userInput1]
-            # print (cardAttackInto)
-            print ("card to attack into is {}".format(cardAttackInto))
-            
-            print ("{} attacks into {}".format(cardAttack, cardAttackInto))
-            
-# Functions for Game 
+
+# Functions for Game
 
 def DeckSetup():
     # Setup for database
@@ -135,10 +198,10 @@ def DeckSetup():
 
     cur.execute("SELECT name FROM deck1")
     rows = cur.fetchall()
-    
+
     cur.execute("SELECT name FROM deck2")
     rows2 = cur.fetchall()
-    
+
     # Setup the decks
     deck1 = [row[0] for row in rows]
     deck2 = [row[0] for row in rows2]
@@ -146,7 +209,7 @@ def DeckSetup():
     # shuffle to two decks
     random.shuffle(deck1)
     random.shuffle(deck2)
-    
+
     decks = [deck1, deck2]
     return decks
 
@@ -157,41 +220,20 @@ def main():
     deck2 = decks[1]
     game = Game(deck1, deck2)
     # pprint.pprint(deck1)
-    
+
     # print (game.hand1)
     # print (game.hand2)
-    
+
     game.draw()
-    # game.mainPhase()
-    game.setCardToZone()
-    game.changeTurn()
+    game.main()
+    game.end()
     # game.firstTurn = False
     while (1 == 1):
         game.draw()
-        # game.changePhase()
-        # print (game.hand1)
-        game.setCardToZone()
-        game.doBattlePhase()
-        game.changeTurn()
-   
+        game.main()
+        game.battle()
+        game.end()
+
 
 if __name__ == "__main__":
     main()
-    
-   
-# read from SQLite3 to list
-# shuffle (randomize) list
-
-# create 2 hands
-# Draw on your turn
-# end turn
-
-# Draw on opponnet turn
-# end opponent turn
-
-# start your turn
-# draw 1 card
-
-# end your turn
-# start opponent turn 
-# end opponent turn
