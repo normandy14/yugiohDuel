@@ -97,7 +97,7 @@ class Game:
     def battle(self):
         print ("Battle Phase!")
         if self.turn == 1:
-            copyOfZone = self.player1.zone
+            copyOfZone = self.player1.zone.copy()
             zone1Length = len(copyOfZone)
             while (zone1Length > 0):
 
