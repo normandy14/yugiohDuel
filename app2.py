@@ -97,12 +97,16 @@ class Game:
     def battle(self):
         print ("Battle Phase!")
         if self.turn == 1:
-            print (self.player1.zone)
-            zone1Length = len(self.player1.zone)
-            if (zone1Length > 0):
+            copyOfZone = self.player1.zone
+            zone1Length = len(copyOfZone)
+            while (zone1Length > 0):
+
+                print (copyOfZone)
+
                 choiceOfCardOffense = int(input("Select a card to attack with: "))
-                cardToAttackWith = self.player1.zone[choiceOfCardOffense]
+                cardToAttackWith = copyOfZone[choiceOfCardOffense]
                 print (cardToAttackWith)
+
                 if (len(self.player2.zone) > 0):
                     print (self.player2.zone)
                     choiceOfCardDefense = int(input("Select a card to attack into: "))
@@ -131,12 +135,14 @@ class Game:
                         self.player1.zone.pop(choiceOfCardOffense)
                 else:
                     print ("Direct Attack!")
-                    print (self.player1.zone[choiceOfCardOffense])
-                    cardToAttackWith = self.player1.zone[choiceOfCardOffense].cardName
+                    print (copyOfZone)
+                    cardToAttackWith = copyOfZone[choiceOfCardOffense].cardName
                     cardOffense = yugioh.get_card(card_name = cardToAttackWith)
                     self.player2.lifePoints -= cardOffense.attack
                 # select card
                 # attack with card
+                copyOfZone.pop(choiceOfCardOffense)
+                zone1Length -= 1
 
 
         elif self.turn == 2:
