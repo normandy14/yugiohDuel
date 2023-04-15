@@ -59,28 +59,38 @@ class Game:
         elif self.turn == 2:
             self.player2.draw()
 
+    def cardToSetWithPositionPlayer1(self):
+        # Select card from hand
+        player1HandLength = len(self.player1.hand)
+        choiceOfCard = int(input("Select a card to play: "))
+        cardToSet = self.player1.hand[choiceOfCard]
+        # Combine position to set in with card
+        positionToSetIn = int(input("Select 0 for attack or 1 for defense: "))
+        self.player1.hand.pop(choiceOfCard)
+        card = Card(cardToSet, positionToSetIn)
+        return card
+
+    # def combineCardWithPositionPlayer
+
+    def cardToSetWithPositionPlayer2(self):
+        layer1HandLength = len(self.player2.hand)
+        choiceOfCard = int(input("Select a card to play: "))
+        cardToSet = self.player2.hand[choiceOfCard]
+        # position to set in
+        positionToSetIn = int(input("Select 0 for attack or 1 for defense: "))
+        self.player2.hand.pop(choiceOfCard)
+        card = Card(cardToSet, positionToSetIn)
+        return card
+
     def main(self):
         print ("Main Phase!")
         if self.turn == 1:
-            # print (self.player1.hand)
-            player1HandLength = len(self.player1.hand)
-            choiceOfCard = int(input("Select a card to play: "))
-            cardToSet = self.player1.hand[choiceOfCard]
-            # position to set in
-            positionToSetIn = int(input("Select 0 for attack or 1 for defense: "))
-            self.player1.hand.pop(choiceOfCard)
-            card = Card(cardToSet, positionToSetIn)
+            card = self.cardToSetWithPositionPlayer1()
             self.player1.zone.append(card)
             # print (self.zone1)
         elif self.turn == 2:
             # print (self.player2.hand)
-            player1HandLength = len(self.player2.hand)
-            choiceOfCard = int(input("Select a card to play: "))
-            cardToSet = self.player2.hand[choiceOfCard]
-            # position to set in
-            positionToSetIn = int(input("Select 0 for attack or 1 for defense: "))
-            self.player2.hand.pop(choiceOfCard)
-            card = Card(cardToSet, positionToSetIn)
+            card = self.cardToSetWithPositionPlayer2()
             self.player2.zone.append(card)
             # print (self.zone2)
 
