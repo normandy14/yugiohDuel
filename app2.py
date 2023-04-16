@@ -47,7 +47,7 @@ class Person:
 
 class Game:
     # instance variables
-    def __init__(self, deck1, deck2):
+    def __init__(self, deck1, deck2):# Destroy card(s) based on card attack points
         self.player1 = Person(deck1)
         self.player2 = Person(deck2)
         self.turn = 1
@@ -70,8 +70,6 @@ class Game:
         card = Card(cardToSet, positionToSetIn)
         return card
 
-    # def combineCardWithPositionPlayer
-
     def cardToSetWithPositionPlayer2(self):
         layer1HandLength = len(self.player2.hand)
         choiceOfCard = int(input("Select a card to play: "))
@@ -81,18 +79,6 @@ class Game:
         self.player2.hand.pop(choiceOfCard)
         card = Card(cardToSet, positionToSetIn)
         return card
-
-    def main(self):
-        print ("Main Phase!")
-        if self.turn == 1:
-            card = self.cardToSetWithPositionPlayer1()
-            self.player1.zone.append(card)
-            # print (self.zone1)
-        elif self.turn == 2:
-            # print (self.player2.hand)
-            card = self.cardToSetWithPositionPlayer2()
-            self.player2.zone.append(card)
-            # print (self.zone2)
 
     def directAttackWithPlayer1(self, copyOfZone, choiceOfCardOffense):
         print ("Direct Attack!")
@@ -107,6 +93,37 @@ class Game:
         cardToAttackWith = copyOfZone[choiceOfCardOffense].cardName
         cardOffense = yugioh.get_card(card_name = cardToAttackWith)
         self.player1.lifePoints -= cardOffense.attack
+
+    def calculateLifePointsOffensePlayer1(self, cardOffense, cardDefense):
+        lifePointDifference = cardOffense.attack - cardDefense.attack
+
+        if (lifePointDifference > 0):
+            self.player2.lifePoints -= lifePointDifference
+        elif (lifePointDifference < 0):
+            self.player1.lifePoints -= abs(lifePointDifference)
+        return lifePointDifference
+
+    def calculateLifePointsOffensePlayer2(self, cardOffense, cardDefense):
+        lifePointDifference = cardOffense.attack - cardDefense.attack
+
+        if (lifePointDifference > 0):
+            self.player1.lifePoints -= lifePointDifference
+        elif (lifePointDifference < 0):
+            self.player2.lifePoints -= abs(lifePointDifference)
+        return lifePointDifference
+
+
+    def main(self):
+        print ("Main Phase!")
+        if self.turn == 1:
+            card = self.cardToSetWithPositionPlayer1()
+            self.player1.zone.append(card)
+            # print (self.zone1)
+        elif self.turn == 2:
+            # print (self.player2.hand)
+            card = self.cardToSetWithPositionPlayer2()
+            self.player2.zone.append(card)
+            # print (self.zone2)
 
     def battle(self):
         print ("Battle Phase!")
@@ -129,15 +146,12 @@ class Game:
 
                     cardOffense = yugioh.get_card(card_name = cardToAttackWith)
                     cardDefense = yugioh.get_card(card_name = cardToAttackInto)
-                    lifePointDifference = cardOffense.attack - cardDefense.attack
 
-                    if (lifePointDifference > 0):
-                        self.player2.lifePoints -= lifePointDifference
-                    elif (lifePointDifference < 0):
-                        self.player1.lifePoints -= abs(lifePointDifference)
-
+                    # calculate lifepoint difference
+                    lifePointDifference = self.calculateLifePointsOffensePlayer1(cardOffense, cardDefense)
                     print ("{} attacks into {} for {} damage".format(cardToAttackWith, cardToAttackInto, lifePointDifference))
 
+                    # Destroy card(s) based on card attack points
                     if (cardOffense.attack > cardDefense.attack):
                         self.player2.zone.pop(choiceOfCardDefense)
                     elif (cardOffense.attack == cardDefense.attack):
@@ -148,10 +162,10 @@ class Game:
                         # cardOffense < cardDefense
                         self.player1.zone.pop(choiceOfCardOffense)
                 else:
+                    # A direct Attack
                     self.directAttackWithPlayer1(copyOfZone, choiceOfCardOffense)
 
-                # select card
-                # attack with card
+                # A substiutue for adding "used" property in Card class __init__
                 copyOfZone.pop(choiceOfCardOffense)
                 zone1Length -= 1
 
@@ -174,14 +188,12 @@ class Game:
 
                     cardOffense = yugioh.get_card(card_name = cardToAttackWith)
                     cardDefense = yugioh.get_card(card_name = cardToAttackInto)
-                    lifePointDifference = cardOffense.attack - cardDefense.attack
 
-                    if (lifePointDifference > 0):
-                        self.player1.lifePoints -= lifePointDifference
-                    elif (lifePointDifference < 0):
-                        self.player2.lifePoints -= abs(lifePointDifference)
-
+                    # calculate lifepoint difference
+                    lifePointDifference = self.calculateLifePointsOffensePlayer2(cardOffense, cardDefense)
                     print ("{} attacks into {} for {} damage".format(cardToAttackWith, cardToAttackInto, lifePointDifference))
+
+                    # Destroy card(s) based on card attack points (could have used lifepoint difference)
                     if (cardOffense.attack > cardDefense.attack):
                         # cardDefense popped
                          self.player1.zone.pop(choiceOfCardDefense)
@@ -193,8 +205,10 @@ class Game:
                         # cardOffense < cardDefense
                         self.player2.zone.pop(choiceOfCardOffense)
                 else:
+                    # A direct Attack
                     self.directAttackWithPlayer2(copyOfZone, choiceOfCardOffense)
 
+                # A substiutue for adding "used" property in Card class __init__s
                 copyOfZone.pop(choiceOfCardOffense)
                 zone2Length -= 1
 
