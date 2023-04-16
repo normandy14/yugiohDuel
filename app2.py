@@ -94,6 +94,20 @@ class Game:
             self.player2.zone.append(card)
             # print (self.zone2)
 
+    def directAttackWithPlayer1(self, copyOfZone, choiceOfCardOffense):
+        print ("Direct Attack!")
+        print (copyOfZone)
+        cardToAttackWith = copyOfZone[choiceOfCardOffense].cardName
+        cardOffense = yugioh.get_card(card_name = cardToAttackWith)
+        self.player2.lifePoints -= cardOffense.attack
+
+    def directAttackWithPlayer2(self, copyOfZone, choiceOfCardOffense):
+        print ("Direct Attack!")
+        print (copyOfZone)
+        cardToAttackWith = copyOfZone[choiceOfCardOffense].cardName
+        cardOffense = yugioh.get_card(card_name = cardToAttackWith)
+        self.player1.lifePoints -= cardOffense.attack
+
     def battle(self):
         print ("Battle Phase!")
         if self.turn == 1:
@@ -134,16 +148,12 @@ class Game:
                         # cardOffense < cardDefense
                         self.player1.zone.pop(choiceOfCardOffense)
                 else:
-                    print ("Direct Attack!")
-                    print (copyOfZone)
-                    cardToAttackWith = copyOfZone[choiceOfCardOffense].cardName
-                    cardOffense = yugioh.get_card(card_name = cardToAttackWith)
-                    self.player2.lifePoints -= cardOffense.attack
+                    self.directAttackWithPlayer1(copyOfZone, choiceOfCardOffense)
+
                 # select card
                 # attack with card
                 copyOfZone.pop(choiceOfCardOffense)
                 zone1Length -= 1
-
 
         elif self.turn == 2:
             copyOfZone = self.player2.zone.copy()
@@ -183,11 +193,7 @@ class Game:
                         # cardOffense < cardDefense
                         self.player2.zone.pop(choiceOfCardOffense)
                 else:
-                    print ("Direct Attack!")
-                    print (copyOfZone)
-                    cardToAttackWith = copyOfZone[choiceOfCardOffense].cardName
-                    cardOffense = yugioh.get_card(card_name = cardToAttackWith)
-                    self.player1.lifePoints -= cardOffense.attack
+                    self.directAttackWithPlayer2(copyOfZone, choiceOfCardOffense)
 
                 copyOfZone.pop(choiceOfCardOffense)
                 zone2Length -= 1
