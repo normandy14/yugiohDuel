@@ -112,6 +112,28 @@ class Game:
             self.player2.lifePoints -= abs(lifePointDifference)
         return lifePointDifference
 
+    def destroyMonsterZoneOffensivePlayer1(self, cardOffense, cardDefense, choiceOfCardOffense, choiceOfCardDefense):
+        if (cardOffense.attack > cardDefense.attack):
+            self.player2.zone.pop(choiceOfCardDefense)
+        elif (cardOffense.attack == cardDefense.attack):
+            # both popped
+            self.player1.zone.pop(choiceOfCardOffense)
+            self.player2.zone.pop(choiceOfCardDefense)
+        else:
+            # cardOffense < cardDefense
+            self.player1.zone.pop(choiceOfCardOffense)
+
+    def destroyMonsterZoneOffensivePlayer2(self, cardOffense, cardDefense, choiceOfCardOffense, choiceOfCardDefense):
+        if (cardOffense.attack > cardDefense.attack):
+            # cardDefense popped
+             self.player1.zone.pop(choiceOfCardDefense)
+        elif (cardOffense.attack == cardDefense.attack):
+            # both popped
+            self.player2.zone.pop(choiceOfCardOffense)
+            self.player1.zone.pop(choiceOfCardDefense)
+        else:
+            # cardOffense < cardDefense
+            self.player2.zone.pop(choiceOfCardOffense)
 
     def main(self):
         print ("Main Phase!")
@@ -140,6 +162,7 @@ class Game:
 
                 if (len(self.player2.zone) > 0):
                     print (self.player2.zone)
+
                     choiceOfCardDefense = int(input("Select a card to attack into: "))
                     cardToAttackInto = self.player2.zone[choiceOfCardDefense]
                     # print (cardToAttackInto)
@@ -152,15 +175,8 @@ class Game:
                     print ("{} attacks into {} for {} damage".format(cardToAttackWith, cardToAttackInto, lifePointDifference))
 
                     # Destroy card(s) based on card attack points
-                    if (cardOffense.attack > cardDefense.attack):
-                        self.player2.zone.pop(choiceOfCardDefense)
-                    elif (cardOffense.attack == cardDefense.attack):
-                        # both popped
-                        self.player1.zone.pop(choiceOfCardOffense)
-                        self.player2.zone.pop(choiceOfCardDefense)
-                    else:
-                        # cardOffense < cardDefense
-                        self.player1.zone.pop(choiceOfCardOffense)
+                    self.destroyMonsterZoneOffensivePlayer1(cardOffense, cardDefense, choiceOfCardOffense, choiceOfCardDefense)
+
                 else:
                     # A direct Attack
                     self.directAttackWithPlayer1(copyOfZone, choiceOfCardOffense)
@@ -178,10 +194,12 @@ class Game:
 
                 choiceOfCardOffense = int(input("Select a card to attack with: "))
                 cardToAttackWith = copyOfZone[choiceOfCardOffense]
+
                 print (cardToAttackWith)
 
                 if (len(self.player1.zone) > 0):
                     print (self.player1.zone)
+
                     choiceOfCardDefense = int(input("Select a card to attack into: "))
                     cardToAttackInto = self.player1.zone[choiceOfCardDefense]
                     # print (cardToAttackInto)
@@ -194,16 +212,7 @@ class Game:
                     print ("{} attacks into {} for {} damage".format(cardToAttackWith, cardToAttackInto, lifePointDifference))
 
                     # Destroy card(s) based on card attack points (could have used lifepoint difference)
-                    if (cardOffense.attack > cardDefense.attack):
-                        # cardDefense popped
-                         self.player1.zone.pop(choiceOfCardDefense)
-                    elif (cardOffense.attack == cardDefense.attack):
-                        # both popped
-                        self.player2.zone.pop(choiceOfCardOffense)
-                        self.player1.zone.pop(choiceOfCardDefense)
-                    else:
-                        # cardOffense < cardDefense
-                        self.player2.zone.pop(choiceOfCardOffense)
+                    self.destroyMonsterZoneOffensivePlayer2(cardOffense, cardDefense, choiceOfCardOffense, choiceOfCardDefense)
                 else:
                     # A direct Attack
                     self.directAttackWithPlayer2(copyOfZone, choiceOfCardOffense)
