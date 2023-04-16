@@ -146,12 +146,16 @@ class Game:
 
 
         elif self.turn == 2:
-            print (self.player2.zone)
+            copyOfZone = self.player2.zone.copy()
             zone2Length = len(self.player2.zone)
-            if (zone2Length > 0):
+            while (zone2Length > 0):
+
+                print (copyOfZone)
+
                 choiceOfCardOffense = int(input("Select a card to attack with: "))
-                cardToAttackWith = self.player2.zone[choiceOfCardOffense]
-                # print (cardToAttackWith)
+                cardToAttackWith = copyOfZone[choiceOfCardOffense]
+                print (cardToAttackWith)
+
                 if (len(self.player1.zone) > 0):
                     print (self.player1.zone)
                     choiceOfCardDefense = int(input("Select a card to attack into: "))
@@ -178,16 +182,15 @@ class Game:
                     else:
                         # cardOffense < cardDefense
                         self.player2.zone.pop(choiceOfCardOffense)
-
-
-
                 else:
                     print ("Direct Attack!")
-                    print (self.player2.zone[choiceOfCardOffense])
-                    cardToAttackWith = self.player2.zone[choiceOfCardOffense].cardName
+                    print (copyOfZone)
+                    cardToAttackWith = copyOfZone[choiceOfCardOffense].cardName
                     cardOffense = yugioh.get_card(card_name = cardToAttackWith)
                     self.player1.lifePoints -= cardOffense.attack
 
+                copyOfZone.pop(choiceOfCardOffense)
+                zone2Length -= 1
 
         # print (self.turn)
         print ("player {} turn".format(self.turn))
@@ -236,7 +239,7 @@ def main():
     decks = DeckSetup()
     deck1 = decks[0]
     deck2 = decks[1]
-    game = Game(deck1, deck2)
+    game = Game(deck2, deck1)
     # pprint.pprint(deck1)
 
     # print (game.hand1)
