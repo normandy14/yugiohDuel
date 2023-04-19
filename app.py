@@ -4,15 +4,10 @@ import random
 import pprint
 
 # ToDo:
-# Attack card difference
-# lifepoint deduction
 
-# if lifepoint negative, current player takes damage
-# if lifepoint positive, opponent playeer takes damage
-
-# destroy defensive card if attk1 > attk2 
-# destroy both if equal
-# destroy offensive if attk1 < attk2
+# else cardAttackInto is 1 (defense position)
+# if attackOfSame < defenseOfOther, then take lifepoint damage to current player with lp difference
+# if attackOfSame > defenseOfOther, defensive card is destroyed, but lp damage is 0
 
 class Card:
     # instance variables
@@ -80,10 +75,12 @@ class Game:
                 choiceOfCardOffense = int(input("Select a card to attack with: "))
                 cardToAttackWith = self.zone1[choiceOfCardOffense]
                 print (cardToAttackWith)
+                print (cardToAttackWith.position)
                 if (len(self.zone2) > 0):
                     print (self.zone2)
                     choiceOfCardDefense = int(input("Select a card to attack into: "))
                     cardToAttackInto = self.zone2[choiceOfCardDefense]
+                    print (cardToAttackInto.position)
                     # print (cardToAttackInto)
                     
                     cardOffense = yugioh.get_card(card_name = cardToAttackWith)
@@ -121,11 +118,13 @@ class Game:
             if (zone2Length > 0):
                 choiceOfCardOffense = int(input("Select a card to attack with: "))
                 cardToAttackWith = self.zone2[choiceOfCardOffense]
+                print (cardToAttackWith.position)
                 # print (cardToAttackWith)
                 if (len(self.zone1) > 0):
                     print (self.zone1)
                     choiceOfCardDefense = int(input("Select a card to attack into: "))
                     cardToAttackInto = self.zone1[choiceOfCardDefense]
+                    print (cardToAttackInto.position)
                     # print (cardToAttackInto)
                     
                     cardOffense = yugioh.get_card(card_name = cardToAttackWith)
