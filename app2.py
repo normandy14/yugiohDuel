@@ -255,6 +255,9 @@ def DeckSetup():
     # Setup the decks
     deck1 = [row[0] for row in rows]
     deck2 = [row[0] for row in rows2]
+    
+    print (deck1)
+    print (deck2)
 
     # shuffle to two decks
     random.shuffle(deck1)
