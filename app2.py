@@ -14,6 +14,8 @@ import pprint
 # destroy both if equal
 # destroy offensive if attk1 < attk2
 
+UNITTEST = True
+
 class Card:
     # instance variables
     def __init__(self, cardName, position):
@@ -236,7 +238,7 @@ class Game:
 
 # Functions for Game
 
-def DeckSetup():
+def deckSetup():
     # Setup for database
     conn = None
     try:
@@ -255,20 +257,21 @@ def DeckSetup():
     # Setup the decks
     deck1 = [row[0] for row in rows]
     deck2 = [row[0] for row in rows2]
-    
-    print (deck1)
-    print (deck2)
+
+    # print (deck1)
+    # print (deck2)
 
     # shuffle to two decks
-    random.shuffle(deck1)
-    random.shuffle(deck2)
+    if UNITTEST == False:
+        random.shuffle(deck1)
+        random.shuffle(deck2)
 
     decks = [deck1, deck2]
     return decks
 
 
 def main():
-    decks = DeckSetup()
+    decks = deckSetup()
     deck1 = decks[0]
     deck2 = decks[1]
     game = Game(deck2, deck1)
@@ -281,7 +284,7 @@ def main():
     game.main()
     game.end()
     # game.firstTurn = False
-    while (1 == 1):
+    while (True):
         game.draw()
         game.main()
         game.battle()
