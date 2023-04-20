@@ -15,7 +15,7 @@ This game uses extensive use of Python classes. This is a way to practice object
 This game uses a Jupyter Notebook to scrap data from two Yugioh deck .csv files. 
 The .csv files were taken from [Yugi Starter Deck](https://yugioh.fandom.com/wiki/Starter_Deck:_Yugi)
 and [Kaiba Starter Deck](https://yugioh.fandom.com/wiki/Starter_Deck:_Kaiba).
-The decks were copies and pasted into a Google Sheet. Then downloaded as a.csv file. Then to a Jupyter notebook. The data from the Jupyter notebook was inserted into a SQLite3 database
+The decks were copies and pasted into a Google Sheet. Then downloaded as a.csv file. Then to a Jupyter notebook. The data from the Jupyter notebook was inserted into a SQLite3 database.
 
 ## Note
 
