@@ -15,7 +15,7 @@ This game uses extensive use of Python classes. This is a way to practice object
 This game uses a Jupyter Notebook to scrap data from two Yugioh deck .csv files. 
 The .csv files were taken from [Yugi Starter Deck](https://yugioh.fandom.com/wiki/Starter_Deck:_Yugi)
 and [Kaiba Starter Deck](https://yugioh.fandom.com/wiki/Starter_Deck:_Kaiba).
-The decks were copies and pasted into a Google Sheet. Then downloaded as a.csv file. Then to a Jupyter notebook.
+The decks were copies and pasted into a Google Sheet. Then downloaded as a.csv file. Then to a Jupyter notebook. The data from the Jupyter notebook was inserted into a SQLite3 database
 
 ## Note
 
@@ -26,6 +26,15 @@ Effect-monsters are not implemented.
 Modelling Yugioh Duel using approximately year 2000 was chosen because there are fewer effect cards, 
 and modern elements of Yugioh such as XYZ summon and Pendelum cards are nonexistent 
 -- as a result, making the mechanics and Yugioh easier to model in Yugioh Duel.
+
+### Implemented Technologies
+
+Implentation of Yugioh Duel built with the following technologies:
+
+* :snake: Python/Flask/Pipenv
+* :floppy_disk: Git
+* :notebook: Jupyter Notebook
+* :cloud: SQLite3
 
 ## License
 
