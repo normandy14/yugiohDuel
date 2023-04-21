@@ -54,13 +54,6 @@ class Game:
         self.player2 = Person(deck2)
         self.turn = 1
 
-    def draw(self):
-        print ("Draw time!")
-        if self.turn == 1:
-            self.player1.draw()
-        elif self.turn == 2:
-            self.player2.draw()
-
     def cardToSetWithPositionPlayer1(self):
         # Select card from hand
         player1HandLength = len(self.player1.hand)
@@ -114,6 +107,7 @@ class Game:
             self.player2.lifePoints -= abs(lifePointDifference)
         return lifePointDifference
 
+    # on player 1's turn
     def destroyMonsterZoneOffensivePlayer1(self, cardOffense, cardDefense, choiceOfCardOffense, choiceOfCardDefense):
         if (cardOffense.attack > cardDefense.attack):
             self.player2.zone.pop(choiceOfCardDefense)
@@ -125,6 +119,7 @@ class Game:
             # cardOffense < cardDefense
             self.player1.zone.pop(choiceOfCardOffense)
 
+    # on player 2's turn
     def destroyMonsterZoneOffensivePlayer2(self, cardOffense, cardDefense, choiceOfCardOffense, choiceOfCardDefense):
         if (cardOffense.attack > cardDefense.attack):
             # cardDefense popped
@@ -136,6 +131,13 @@ class Game:
         else:
             # cardOffense < cardDefense
             self.player2.zone.pop(choiceOfCardOffense)
+
+    def draw(self):
+        print ("Draw time!")
+        if self.turn == 1:
+            self.player1.draw()
+        elif self.turn == 2:
+            self.player2.draw()
 
     def main(self):
         print ("Main Phase!")
