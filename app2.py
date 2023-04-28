@@ -15,6 +15,7 @@ import pprint
 # destroy offensive if attk1 < attk2
 
 UNITTEST = True
+DEBUG = True
 
 class Card:
     # instance variables
@@ -34,11 +35,13 @@ class Person:
         self.lifePoints = 8000
         self.loadHand()
 
+    # only at __init__
     def loadHand(self):
        # print ("Load hand!")
        self.hand = self.deck[0:5]
        self.deck = self.deck[5:]
 
+    # draw from player's hand
     def draw(self):
        nextCard = self.deck[:1]
        # print (self.hand)
@@ -54,6 +57,7 @@ class Game:
         self.player2 = Person(deck2)
         self.turn = 1
 
+    # set a card from hand into the monster zone
     def cardToSetWithPositionPlayer1(self):
         # Select card from hand
         player1HandLength = len(self.player1.hand)
@@ -89,6 +93,7 @@ class Game:
         cardOffense = yugioh.get_card(card_name = cardToAttackWith)
         self.player1.lifePoints -= cardOffense.attack
 
+    # For attacking into monster in attack mode
     def calculateLifePointsOffensePlayer1(self, cardOffense, cardDefense):
         lifePointDifference = cardOffense.attack - cardDefense.attack
 
@@ -108,6 +113,12 @@ class Game:
         return lifePointDifference
 
     # on player 1's turn
+    # cardOffense and cardDefense are the acutal object from yugioh 3rd party
+
+    # choiceOfCardOffense and choiceOfCardDefense defense are the positions of
+    # the cards attacking and defending on each player1s monster zone, respectively
+    # (the latter two are only used when the yugioh card object is destroyed
+    # to "pop" the destroyed card on the field)
     def destroyMonsterZoneOffensivePlayer1(self, cardOffense, cardDefense, choiceOfCardOffense, choiceOfCardDefense):
         if (cardOffense.attack > cardDefense.attack):
             self.player2.zone.pop(choiceOfCardDefense)
@@ -142,34 +153,40 @@ class Game:
     def main(self):
         print ("Main Phase!")
         if self.turn == 1:
+            # select the card to set to monster zone from hand and select its card position
             card = self.cardToSetWithPositionPlayer1()
             self.player1.zone.append(card)
             # print (self.zone1)
         elif self.turn == 2:
-            # print (self.player2.hand)
             card = self.cardToSetWithPositionPlayer2()
             self.player2.zone.append(card)
-            # print (self.zone2)
 
     def battle(self):
         print ("Battle Phase!")
         if self.turn == 1:
             copyOfZone = self.player1.zone.copy()
             zone1Length = len(copyOfZone)
+            # while there are monster cards on the player 1's fielfs
             while (zone1Length > 0):
-
+                # To show all possible cards to attack with on player 1's field
                 print (copyOfZone)
 
+                # select a card to attack with
+                ### SOLVE LATER: assumes all cards in player 1's field are in attack position (cards in defense position)
                 choiceOfCardOffense = int(input("Select a card to attack with: "))
                 cardToAttackWith = copyOfZone[choiceOfCardOffense]
-                print (cardToAttackWith)
 
+                if DEBUG: print (cardToAttackWith)
+
+                # if there are monster cards on player 2's field -- or cannot direct attack
                 if (len(self.player2.zone) > 0):
+                    # show all posible cards on player 2's fierd that can be targetted by player 1's monster cards
                     print (self.player2.zone)
 
                     choiceOfCardDefense = int(input("Select a card to attack into: "))
                     cardToAttackInto = self.player2.zone[choiceOfCardDefense]
-                    # print (cardToAttackInto)
+
+                    # if DEBUG (print (cardToAttackInto))
 
                     cardOffense = yugioh.get_card(card_name = cardToAttackWith)
                     cardDefense = yugioh.get_card(card_name = cardToAttackInto)
@@ -179,6 +196,7 @@ class Game:
                     print ("{} attacks into {} for {} damage".format(cardToAttackWith, cardToAttackInto, lifePointDifference))
 
                     # Destroy card(s) based on card attack points
+                    # SOLVE LATTER: can create class called 'Attack Object', that has cardOffense, cardDefense, choiceOfCardOffense, choiceOfCardDefense
                     self.destroyMonsterZoneOffensivePlayer1(cardOffense, cardDefense, choiceOfCardOffense, choiceOfCardDefense)
 
                 else:
@@ -186,15 +204,17 @@ class Game:
                     self.directAttackWithPlayer1(copyOfZone, choiceOfCardOffense)
 
                 # A substiutue for adding "used" property in Card class __init__
+                # the attacking card on player 1's monster zone has been used
+                # and no longer can be used, so we "pop" from the copy
                 copyOfZone.pop(choiceOfCardOffense)
-                zone1Length -= 1
+                zone1Length -= 1 # a card was selected and then used, so the cards that are still avaliable are -1
 
         elif self.turn == 2:
             copyOfZone = self.player2.zone.copy()
             zone2Length = len(self.player2.zone)
             while (zone2Length > 0):
 
-                print (copyOfZone)
+                if DEBUG: print (copyOfZone)
 
                 choiceOfCardOffense = int(input("Select a card to attack with: "))
                 cardToAttackWith = copyOfZone[choiceOfCardOffense]
@@ -225,12 +245,13 @@ class Game:
                 copyOfZone.pop(choiceOfCardOffense)
                 zone2Length -= 1
 
+        # alot of DEBUG statements
         # print (self.turn)
-        print ("player {} turn".format(self.turn))
-        print (self.player1.zone)
-        print (self.player2.zone)
-        print ("P1 LP = {}".format(self.player1.lifePoints))
-        print ("P2 LP = {}".format(self.player2.lifePoints))
+        if DEBUG: print ("player {} turn".format(self.turn))
+        if DEBUG: print (self.player1.zone)
+        if DEBUG: print (self.player2.zone)
+        if DEBUG: print ("P1 LP = {}".format(self.player1.lifePoints))
+        if DEBUG: print ("P2 LP = {}".format(self.player2.lifePoints))
 
     def end(self):
         if self.turn == 1:
@@ -263,7 +284,7 @@ def deckSetup():
     # print (deck1)
     # print (deck2)
 
-    # shuffle to two decks
+    # shuffle the two decks
     if UNITTEST == False:
         random.shuffle(deck1)
         random.shuffle(deck2)
