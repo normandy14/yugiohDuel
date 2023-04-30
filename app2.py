@@ -4,15 +4,11 @@ import random
 import pprint
 
 # ToDo:
-# Attack card difference
-# lifepoint deduction
+# Remove option to attack with cards in defense position
+# Add (Q)uit option to end battle phase without attacking with a or all of monsters
 
-# if lifepoint negative, current player takes damage
-# if lifepoint positive, opponent playeer takes damage
-
-# destroy defensive card if attk1 > attk2
-# destroy both if equal
-# destroy offensive if attk1 < attk2
+# check for end of game (lp = 0)
+# create more unittest
 
 UNITTEST = True
 DEBUG = True
