@@ -95,6 +95,7 @@ class Game:
 
     # For attacking into monster in attack mode
     def calculateLifePointsOffensePlayer1(self, cardOffense, cardDefense):
+        if DEBUG: print ("calculateLifePointsOffensePlayer1")
         lifePointDifference = cardOffense.attack - cardDefense.attack
 
         if (lifePointDifference > 0):
@@ -111,6 +112,19 @@ class Game:
         elif (lifePointDifference < 0):
             self.player2.lifePoints -= abs(lifePointDifference)
         return lifePointDifference
+
+    def calculateLifePointsDefensePlayer1(self, cardOffense, cardDefense): # the card to attack into is in defense
+        if DEBUG: print ("calculateLifePointsDefensePlayer1")
+        lifePointDifference = cardOffense.attack - cardDefense.defense
+        if DEBUG: print (lifePointDifference)
+        if lifePointDifference < 0: # if lp is negative
+            self.player1.lifePoints -= abs(lifePointDifference) # and attacking olayer takes damage
+
+    def calculateLifePointsDefensePlayer2(self, cardOffense, cardDefense):
+        lifePointDifference = cardOffense.attack - cardDefense.defense
+        if DEBUG: print (lifePointDifference)
+        if lifePointDifference < 0: # if lp is negative
+            self.player2.lifePoints -= abs(lifePointDifference) # and attacking olayer takes damage
 
     # on player 1's turn
     # cardOffense and cardDefense are the acutal object from yugioh 3rd party
@@ -143,6 +157,28 @@ class Game:
             # cardOffense < cardDefense
             self.player2.zone.pop(choiceOfCardOffense)
 
+    def destroyMonsterZoneDefensePlayer1(self, cardOffense, cardDefense, choiceOfCardOffense, choiceOfCardDefense):
+        if (cardOffense.attack > cardDefense.defense):
+            self.player2.zone.pop(choiceOfCardDefense)
+        elif (cardOffense.attack == cardDefense.attack):
+            # niether card is destroyed if monster attacks with same monster with the samw defense
+            pass
+        else:
+            # cardOffense < cardDefense
+            # no card to destroyed, only lifepoints lost by the attacking card
+            pass
+
+    def destroyMonsterZoneDefensePlayer2(self, cardOffense, cardDefense, choiceOfCardOffense, choiceOfCardDefense):
+        if (cardOffense.attack > cardDefense.defense):
+            self.player1.zone.pop(choiceOfCardDefense)
+        elif (cardOffense.attack == cardDefense.attack):
+            # niether card is destroyed if monster attacks with same monster with the samw defense
+            pass
+        else:
+            # cardOffense < cardDefense
+            # no card to destroyed, only lifepoints lost by the attacking card
+            pass
+
     def draw(self):
         print ("Draw time!")
         if self.turn == 1:
@@ -163,6 +199,7 @@ class Game:
 
     def battle(self):
         print ("Battle Phase!")
+        print ("Player {} turn".format(self.turn))
         if self.turn == 1:
             copyOfZone = self.player1.zone.copy()
             zone1Length = len(copyOfZone)
@@ -191,13 +228,24 @@ class Game:
                     cardOffense = yugioh.get_card(card_name = cardToAttackWith)
                     cardDefense = yugioh.get_card(card_name = cardToAttackInto)
 
-                    # calculate lifepoint difference
-                    lifePointDifference = self.calculateLifePointsOffensePlayer1(cardOffense, cardDefense)
-                    print ("{} attacks into {} for {} damage".format(cardToAttackWith, cardToAttackInto, lifePointDifference))
+                    # print ("{} attacks into {} for {} damage".format(cardToAttackWith, cardToAttackInto, lifePointDifference))
 
                     # Destroy card(s) based on card attack points
                     # SOLVE LATTER: can create class called 'Attack Object', that has cardOffense, cardDefense, choiceOfCardOffense, choiceOfCardDefense
-                    self.destroyMonsterZoneOffensivePlayer1(cardOffense, cardDefense, choiceOfCardOffense, choiceOfCardDefense)
+
+                    print ("card to attack into is {} and pos is {}".format(cardToAttackInto, cardToAttackInto.position))
+
+                    if cardToAttackInto.position == 0: # of the defending card is in offfense
+                        # calculate lifepoint difference
+                        self.calculateLifePointsOffensePlayer1(cardOffense, cardDefense)
+                        # print ("{} attacks into {} for {} damage".format(cardToAttackWith, cardToAttackInto, lifePointDifference))
+
+                        self.destroyMonsterZoneOffensivePlayer1(cardOffense, cardDefense, choiceOfCardOffense, choiceOfCardDefense)
+                    elif cardToAttackInto.position == 1:
+                        self.calculateLifePointsDefensePlayer1(cardOffense, cardDefense) # attack into card in defense as player1
+                        # print ("{} attacks into {} for {} damage".format(cardToAttackWith, cardToAttackInto, lifePointDifference))
+
+                        self.destroyMonsterZoneDefensePlayer1(cardOffense, cardDefense, choiceOfCardOffense, choiceOfCardDefense)
 
                 else:
                     # A direct Attack
@@ -214,7 +262,7 @@ class Game:
             zone2Length = len(self.player2.zone)
             while (zone2Length > 0):
 
-                if DEBUG: print (copyOfZone)
+                print (copyOfZone)
 
                 choiceOfCardOffense = int(input("Select a card to attack with: "))
                 cardToAttackWith = copyOfZone[choiceOfCardOffense]
@@ -232,11 +280,24 @@ class Game:
                     cardDefense = yugioh.get_card(card_name = cardToAttackInto)
 
                     # calculate lifepoint difference
-                    lifePointDifference = self.calculateLifePointsOffensePlayer2(cardOffense, cardDefense)
-                    print ("{} attacks into {} for {} damage".format(cardToAttackWith, cardToAttackInto, lifePointDifference))
+                    # lifePointDifference = self.calculateLifePointsOffensePlayer2(cardOffense, cardDefense)
+                    # print ("{} attacks into {} for {} damage".format(cardToAttackWith, cardToAttackInto, lifePointDifference))
 
                     # Destroy card(s) based on card attack points (could have used lifepoint difference)
-                    self.destroyMonsterZoneOffensivePlayer2(cardOffense, cardDefense, choiceOfCardOffense, choiceOfCardDefense)
+
+                    # print ("card to attack into is {} and pos is {}".format(cardToAttackInto, cardToAttackInto.position))
+                    if cardToAttackInto.position == 0: # of the defending card is in offfense
+                        # calculate lifepoint difference
+                        self.calculateLifePointsOffensePlayer2(cardOffense, cardDefense) # attack into offense card as player2
+                        # print ("{} attacks into {} for {} damage".format(cardToAttackWith, cardToAttackInto, lifePointDifference))
+
+                        self.destroyMonsterZoneOffensivePlayer2(cardOffense, cardDefense, choiceOfCardOffense, choiceOfCardDefense)
+                    elif cardToAttackInto.position == 1:
+                        self.calculateLifePointsDefensePlayer2(cardOffense, cardDefense) # attack into defense ard as player2
+                        # print ("{} attacks into {} for {} damage".format(cardToAttackWith, cardToAttackInto, lifePointDifference))
+
+                        self.destroyMonsterZoneDefensePlayer2(cardOffense, cardDefense, choiceOfCardOffense, choiceOfCardDefense)
+
                 else:
                     # A direct Attack
                     self.directAttackWithPlayer2(copyOfZone, choiceOfCardOffense)
