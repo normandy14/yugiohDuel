@@ -36,6 +36,15 @@ Implentation of Yugioh Duel built with the following technologies:
 * :notebook: Jupyter Notebook
 * :cloud: SQLite3
 
+## Running the tests
+
+Explain how to run the automated tests for this system:
+
+```
+pipenv run python3 testUnitTests.py -b
+(or) python3 testUnitTests.py -b
+```
+
 ## License
 
 This project is licensed under the GNU General Public License v3.0 [License](LICENSE.md) - see the LICENSE.md file for details
