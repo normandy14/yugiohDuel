@@ -27,15 +27,6 @@ Modelling Yugioh Duel using approximately year 2000 was chosen because there are
 and modern elements of Yugioh such as XYZ summon and Pendelum cards are nonexistent 
 -- as a result, making the mechanics and Yugioh easier to model in Yugioh Duel.
 
-### Implemented Technologies
-
-Implentation of Yugioh Duel built with the following technologies:
-
-* :snake: Python/Flask/Pipenv
-* :floppy_disk: Git
-* :notebook: Jupyter Notebook
-* :cloud: SQLite3
-
 ## Running the tests
 
 Explain how to run the automated tests for this system:
@@ -44,6 +35,15 @@ Explain how to run the automated tests for this system:
 pipenv run python3 testUnitTests.py -b
 (or) python3 testUnitTests.py -b
 ```
+
+### Implemented Technologies
+
+Implentation of Yugioh Duel built with the following technologies:
+
+* :snake: Python/Flask/Pipenv
+* :floppy_disk: Git
+* :notebook: Jupyter Notebook
+* :cloud: SQLite3
 
 ## License
 
