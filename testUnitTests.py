@@ -34,6 +34,26 @@ class testDrawPhase(TestCase):
         result = self.game.player2.hand[-1]
         self.assertEqual(result, "Koumori Dragon")
 
+class testMainPhase(TestCase):
+    def setUp(self):
+        decks = deckSetup()
+        deck1 = decks[0]
+        deck2 = decks[1]
+        self.game = Game(deck2, deck1)
+    # we test mainPhase by the components that make up main phase
+    @mock.patch('app2.input', create=True)
+    def testCardToSetWithPositionPlayer1(self, mocked_input):
+        mocked_input.side_effect = [0, 0]
+        result = self.game.cardToSetWithPositionPlayer1().cardName
+        self.assertEqual(result, "Mystical Elf")
+
+    @mock.patch('app2.input', create=True)
+    def testCardToSetWithPositionPlayer2(self, mocked_input):
+        mocked_input.side_effect = [0, 0]
+        result = self.game.cardToSetWithPositionPlayer2().cardName
+        self.assertEqual(result, "Blue-Eyes White Dragon")
+
+
 '''
 class dictCreateTests(TestCase):
     @mock.patch('module_under_test.input', create=True)
